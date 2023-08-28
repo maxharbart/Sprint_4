@@ -7,16 +7,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 public class MainPage {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // Кнопка заказа в хедере
-    private By headerOrderButton = By.className("Button_Button__ra12g");
+    private final By headerOrderButton = By.className("Button_Button__ra12g");
 
     // Кнопка заказка в теле страницы
-    private By bodyOrderButton = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
+    private final By bodyOrderButton = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
+
+    // Блок с вопросами
+    private final By questions = By.className("Home_FAQ__3uVm4");
+
+    //текст ответа на вопрос
+    private final By visibleAnswer = By.xpath(".//div[contains(@class, 'accordion__panel') and not(@hidden)]");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -45,11 +50,6 @@ public class MainPage {
         }
     }
 
-    // Блок с вопросами
-
-    private By questions = By.className("Home_FAQ__3uVm4");
-    private final By visibleAnswer = By.xpath(".//div[contains(@class, 'accordion__panel') and not(@hidden)]");
-
     // Скролл до вопросов
     public void scrollToQuestions() {
         WebElement element = driver.findElement(questions);
@@ -60,8 +60,6 @@ public class MainPage {
     public String clickQuestionGetAnswer(String question) {
         scrollToQuestions();
 
-
-
         WebElement element = driver.findElement(By.xpath(".//div[text() = '" + question + "']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         element.click();
@@ -70,6 +68,4 @@ public class MainPage {
 
         return driver.findElement(By.xpath(".//div[text() = '" + question + "']/parent::div/parent::div//p")).getText();
     }
-
-
 }

@@ -3,41 +3,41 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+
 public class OrderPage {
 
-    private WebDriver driver;
-
-    private By name = By.xpath(".//input[@placeholder='* Имя']");
-    private By surname = By.xpath(".//input[@placeholder='* Фамилия']");
-    private By address = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
-    private By metro = By.xpath(".//input[@placeholder='* Станция метро']");
-    private By phone = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final WebDriver driver;
+    private final By name = By.xpath(".//input[@placeholder='* Имя']");
+    private final By surname = By.xpath(".//input[@placeholder='* Фамилия']");
+    private final By address = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
+    private final By metro = By.xpath(".//input[@placeholder='* Станция метро']");
+    private final By phone = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
 
     // Кнопка Далее
-    private By proceedButton = By.xpath(".//button[text()='Далее']");
+    private final By proceedButton = By.xpath(".//button[text()='Далее']");
 
     // поле "Когда привезти самокат"
-    private By date = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    private final By date = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
 
     // поле "Срок аренды"
-    private By rentPeriod = By.className("Dropdown-placeholder");
+    private final By rentPeriod = By.className("Dropdown-placeholder");
     //private By rentOneDay = By.xpath(".//div[@class='Dropdown-option' and text()='сутки']");
 
     // чекбоксы цветов
-    private By checkboxBlack = By.id("black");
-    private By checkboxGrey = By.id("grey");
+    private final By checkboxBlack = By.id("black");
+    private final By checkboxGrey = By.id("grey");
 
     //поле "Комментарий для курьера"
-    private By comment = By.xpath(".//input[@placeholder='Комментарий для курьера']");
+    private final By comment = By.xpath(".//input[@placeholder='Комментарий для курьера']");
 
     //кнопка "Заказать"
-    private By order = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button[2]");
+    private final By order = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button[2]");
 
     // Кнопка "Да" в диалоге подтверждения
-    private By confirmOrderButton = By.xpath(".//button[text()='Да']");
+    private final By confirmOrderButton = By.xpath(".//button[text()='Да']");
 
     // Сообщение об успешном заказе
-    private By orderSuccess = By.xpath(".//div[text()='Заказ оформлен']");
+    private final By orderSuccess = By.xpath(".//div[text()='Заказ оформлен']");
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
@@ -84,42 +84,42 @@ public class OrderPage {
     }
 
     // Когда привезти самокат
-    public void setRentDate(String rentDate){
+    public void setRentDate(String rentDate) {
         driver.findElement(date).sendKeys(rentDate);
         driver.findElement(date).sendKeys(Keys.ENTER);
     }
 
-   // Срок аренды
-    public void setRentPeriod(){
+    // Срок аренды
+    public void setRentPeriod() {
         driver.findElement(rentPeriod).click();
         driver.findElement(By.xpath(".//div[text()='сутки']")).click();
     }
 
     // Выбор цвета
-    public void setColor(String color){
-        if(color.equals("Черный")){
+    public void setColor(String color) {
+        if (color.equals("Черный")) {
             driver.findElement(checkboxBlack).click();
-        }else {
+        } else {
             driver.findElement(checkboxGrey).click();
         }
     }
 
     // Комментарий для курьера
-    public void setComment(String userComment){
+    public void setComment(String userComment) {
         driver.findElement(comment).sendKeys(userComment);
     }
 
     //Нажимаем "Заказать"
-    public void clickOrder(){
+    public void clickOrder() {
         driver.findElement(order).click();
     }
 
-    public void confirmOrder(){
+    public void confirmOrder() {
         driver.findElement(confirmOrderButton).click();
     }
 
     //Заполнение формы аренды самоката
-    public void enterRentData(String date, String color, String comment){
+    public void enterRentData(String date, String color, String comment) {
         setRentDate(date);
         setRentPeriod();
         setColor(color);
@@ -127,16 +127,9 @@ public class OrderPage {
         clickOrder();
     }
 
-
-
-
     // Проверяем наличие сообщение "Заказ оформлен"
-    public boolean getSuccessTitle(){
+    public boolean getSuccessTitle() {
         int count = driver.findElements(orderSuccess).size();
-
-        if (count > 0) {
-            return true;
-        }
-        else {return false;}
+        return count > 0;
     }
 }

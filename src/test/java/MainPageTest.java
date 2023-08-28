@@ -10,19 +10,18 @@ import pages.MainPage;
 
 @RunWith(Parameterized.class)
 public class MainPageTest {
-    private WebDriver driver;
     private final String question;
     private final String answer;
-
+    private WebDriver driver;
 
     public MainPageTest(String question, String answer) {
         this.question = question;
         this.answer = answer;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Соответствие вопросов и ответов в разделе 'Вопросы о важном'. Тестовые данные: {0} {1}")
     public static Object[][] getTexts() {
-        return new Object[][] {
+        return new Object[][]{
                 {"Сколько это стоит? И как оплатить?",
                         "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 {"Хочу сразу несколько самокатов! Так можно?",
@@ -60,7 +59,7 @@ public class MainPageTest {
         driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MainPage objMainPage = new MainPage(driver);
-        Assert.assertEquals("Ответ не соответствует вопросу " + question, answer, objMainPage.clickQuestionGetAnswer(question) );
+        Assert.assertEquals("Проверка текста ответа на вопрос", answer, objMainPage.clickQuestionGetAnswer(question));
     }
 
     @Test
@@ -70,12 +69,11 @@ public class MainPageTest {
         driver = new FirefoxDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
         MainPage objMainPage = new MainPage(driver);
-        Assert.assertEquals("Ответ не соответствует вопросу " + question, answer, objMainPage.clickQuestionGetAnswer(question) );
+        Assert.assertEquals("Проверка текста ответа на вопрос", answer, objMainPage.clickQuestionGetAnswer(question));
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
-
 }

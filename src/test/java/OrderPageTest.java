@@ -12,15 +12,15 @@ import pages.OrderPage;
 @RunWith(Parameterized.class)
 public class OrderPageTest {
 
-    private WebDriver driver;
     private final String buttonType;
     private final String username;
     private final String userSurname;
     private final String rentDate;
     private final String comment;
-    private  final String color;
+    private final String color;
+    private WebDriver driver;
 
-    public OrderPageTest(String buttonType, String username, String userSurname, String rentDate, String comment, String color){
+    public OrderPageTest(String buttonType, String username, String userSurname, String rentDate, String comment, String color) {
         this.buttonType = buttonType;
         this.username = username;
         this.userSurname = userSurname;
@@ -30,10 +30,10 @@ public class OrderPageTest {
     }
 
     @Parameterized.Parameters
-    public static Object[][] getUserData(){
+    public static Object[][] getUserData() {
         return new Object[][]{
                 {"body", "Райан", "Гослинг", "21.09.2023", "Текст комментария", "Черный"},
-                {"header", "Иван", "Петров", "31.08.2023", "Комментарий!" , "Серый"},
+                {"header", "Иван", "Петров", "31.08.2023", "Комментарий!", "Серый"},
         };
     }
 
@@ -49,7 +49,7 @@ public class OrderPageTest {
         objOrderPage.enterPersonalData(username, userSurname, "Тверская,1", "79990001234");
         objOrderPage.enterRentData(rentDate, color, comment);
         objOrderPage.confirmOrder();
-        Assert.assertEquals("Не удалось оформить заказ",true, objOrderPage.getSuccessTitle());
+        Assert.assertTrue("Не удалось оформить заказ", objOrderPage.getSuccessTitle());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class OrderPageTest {
         objOrderPage.enterPersonalData(username, userSurname, "Тверская,1", "79990001234");
         objOrderPage.enterRentData(rentDate, color, comment);
         objOrderPage.confirmOrder();
-        Assert.assertEquals("Не удалось оформить заказ",true, objOrderPage.getSuccessTitle());
+        Assert.assertTrue("Не удалось оформить заказ", objOrderPage.getSuccessTitle());
     }
 
     @After
